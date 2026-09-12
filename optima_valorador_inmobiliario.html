@@ -68,7 +68,6 @@ footer{padding:20px 0 50px;text-align:center;color:var(--muted);font-size:11px}
 <body>
 <div class="container">
 <header>
-  <div class="brand"><div class="logo">O</div><div>ÓPTIMA<small>INVERSIONES INMOBILIARIAS</small></div></div>
   <div class="badge">VALORACIÓN MULTIMÉTODO · 2026</div>
 </header>
 
@@ -119,7 +118,6 @@ footer{padding:20px 0 50px;text-align:center;color:var(--muted);font-size:11px}
     </div>
     <div class="cta">
       <button class="primary" style="width:auto" onclick="requestValuation()">QUIERO UNA VALORACIÓN PROFESIONAL</button>
-      <button class="secondary" onclick="window.print()">IMPRIMIR / GUARDAR PDF</button>
     </div>
   </div>
 </section>
@@ -201,7 +199,7 @@ function requestValuation(){
   const address=document.getElementById('address').value||'';
   const subject=encodeURIComponent('Solicitud de valoración profesional');
   const body=encodeURIComponent(`Hola Óptima,%0D%0A%0D%0AQuiero solicitar una valoración profesional de mi inmueble.%0D%0A%0D%0AZona: ${address}%0D%0A%0D%0AGracias.`);
-  window.location.href=`mailto:info@optima-inmobiliaria.com?subject=${subject}&body=${body}`;
+  window.location.href=`mailto:jgarcia@optima.com?subject=${subject}&body=${body}`;
 }
 </script>
 </body>
