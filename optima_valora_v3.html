@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valorador Inmobiliario Óptima</title>
+<meta name="description" content="Valorador inmobiliario multicriterio de Óptima Inversiones Inmobiliarias. Estima el valor de venta y alquiler de cualquier inmueble en España.">
+<style>
+:root{
+  --optima:#0A6D37; --navy:#102A43; --gold:#C7A34B; --ink:#17212B;
+  --muted:#667085; --bg:#F5F7F6; --card:#fff; --line:#E4E7EC;
+  --ok:#18794E; --shadow:0 18px 50px rgba(16,42,67,.10);
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1180px;margin:auto;padding:28px 20px 60px}
+.hero{background:linear-gradient(135deg,#062d1a,#0A6D37 55%,#153b55);color:#fff;border-radius:28px;padding:38px 34px;margin-bottom:24px;box-shadow:var(--shadow)}
+.brand{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#e8d49a;font-weight:800}
+h1{font-size:clamp(30px,5vw,54px);line-height:1.02;margin:10px 0}
+.hero p{max-width:760px;font-size:17px;line-height:1.6;color:#e8eef0;margin-bottom:0}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:25px;box-shadow:0 8px 30px rgba(16,42,67,.05)}
+h2{margin:0 0 18px;font-size:21px;color:var(--navy)}
+.section{margin-top:26px}.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.fields.three{grid-template-columns:repeat(3,1fr)}
+label{display:block;font-size:13px;font-weight:750;color:#344054;margin-bottom:7px}
+input,select{width:100%;padding:13px 14px;border:1px solid #D0D5DD;border-radius:11px;background:#fff;font-size:15px;outline:none}
+input:focus,select:focus{border-color:var(--optima);box-shadow:0 0 0 3px rgba(10,109,55,.10)}
+.checks{display:flex;flex-wrap:wrap;gap:9px}.check{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:10px 11px;font-size:13px;background:#fafafa}
+.check input{width:auto}
+button{border:0;border-radius:12px;padding:15px 19px;background:var(--optima);color:white;font-weight:800;font-size:15px;cursor:pointer;width:100%;margin-top:20px}
+button:hover{filter:brightness(.94)}
+.result{position:sticky;top:15px}
+.value{font-size:42px;font-weight:900;color:var(--optima);letter-spacing:-1px}
+.range{font-size:14px;color:var(--muted);margin-top:3px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.kpi{padding:15px;border:1px solid var(--line);border-radius:13px;background:#fbfcfc}
+.kpi b{display:block;font-size:20px;color:var(--navy);margin-top:4px}
+.conf{margin-top:18px}.bar{height:9px;background:#E7ECE9;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:var(--optima);width:0%}
+.sources{margin-top:20px}.source{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #eee;font-size:13px}.source:last-child{border:0}
+.pill{padding:4px 8px;border-radius:99px;background:#E9F5EE;color:var(--ok);font-weight:800;font-size:11px}
+.note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:16px}
+.report{display:none;margin-top:22px}.report pre{white-space:pre-wrap;font-family:inherit}
+.footer{margin-top:20px;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.result{position:static}.fields,.fields.three{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.wrap{padding:14px}.hero{padding:28px 22px;border-radius:20px}.fields,.fields.three{grid-template-columns:1fr}.card{padding:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="brand">Óptima Inversiones Inmobiliarias</div>
+    <h1>Valorador Inmobiliario Óptima</h1>
+    <p>Una valoración multicriterio que combina características del inmueble, mercado comparable, información catastral y estadísticas oficiales para obtener un <strong>rango de valor de mercado</strong>.</p>
+  </section>
+
+  <div class="grid">
+    <main class="card">
+      <h2>1. Identifica el inmueble</h2>
+      <div class="fields">
+        <div><label>Dirección</label><input id="address" placeholder="Calle, número"></div>
+        <div><label>Municipio</label><input id="city" placeholder="Madrid, Santiago, Alcorcón..."></div>
+        <div><label>Provincia</label><input id="province" placeholder="Madrid"></div>
+        <div><label>Código postal</label><input id="postal" placeholder="28001"></div>
+        <div><label>Referencia catastral (opcional)</label><input id="cadastre" placeholder="20 caracteres"></div>
+        <div><label>Tipo de inmueble</label>
+          <select id="type">
+            <option>Piso</option><option>Ático</option><option>Casa</option><option>Chalet</option>
+            <option>Adosado</option><option>Local</option><option>Oficina</option><option>Garaje</option>
+            <option>Terreno urbano</option><option>Finca rústica</option><option>Hotel / alojamiento</option>
+            <option>Edificio</option><option>Otro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>2. Características</h2>
+        <div class="fields three">
+          <div><label>Superficie construida m²</label><input id="sqm" type="number" min="1" placeholder="90"></div>
+          <div><label>Habitaciones</label><input id="rooms" type="number" min="0" placeholder="3"></div>
+          <div><label>Baños</label><input id="baths" type="number" min="0" placeholder="2"></div>
+          <div><label>Planta</label><input id="floor" type="number" placeholder="2"></div>
+          <div><label>Año construcción</label><input id="year" type="number" placeholder="2005"></div>
+          <div><label>Parcela m²</label><input id="plot" type="number" placeholder="0"></div>
+        </div>
+        <div class="section">
+          <label>Características que afectan al valor</label>
+          <div class="checks">
+            <label class="check"><input id="lift" type="checkbox"> Ascensor</label>
+            <label class="check"><input id="garage" type="checkbox"> Garaje</label>
+            <label class="check"><input id="storage" type="checkbox"> Trastero</label>
+            <label class="check"><input id="terrace" type="checkbox"> Terraza</label>
+            <label class="check"><input id="balcony" type="checkbox"> Balcón</label>
+            <label class="check"><input id="pool" type="checkbox"> Piscina</label>
+            <label class="check"><input id="garden" type="checkbox"> Jardín</label>
+            <label class="check"><input id="views" type="checkbox"> Buenas vistas</label>
+            <label class="check"><input id="exterior" type="checkbox"> Exterior</label>
+          </div>
+        </div>
+        <div class="fields">
+          <div><label>Estado</label><select id="condition"><option>Reformado / nuevo</option><option>Buen estado</option><option>A actualizar</option><option>A reformar</option></select></div>
+          <div><label>Uso / objetivo</label><select id="purpose"><option>Venta</option><option>Alquiler</option><option>Venta + alquiler</option><option>Inversión</option></select></div>
+        </div>
+      </div>
+
+      <button onclick="calculate()">CALCULAR VALORACIÓN ÓPTIMA</button>
+      <div class="note">Esta herramienta genera una estimación orientativa. No sustituye una tasación oficial homologada ni constituye por sí sola una valoración con finalidad hipotecaria.</div>
+    </main>
+
+    <aside class="card result">
+      <h2>Resultado Óptima</h2>
+      <div class="value" id="value">—</div>
+      <div class="range" id="range">Introduce los datos y calcula.</div>
+      <div class="kpis">
+        <div class="kpi">€/m² estimado<b id="sqmValue">—</b></div>
+        <div class="kpi">Alquiler estimado<b id="rentValue">—</b></div>
+        <div class="kpi">Rendimiento bruto<b id="yieldValue">—</b></div>
+        <div class="kpi">Confianza<b id="confidence">—</b></div>
+      </div>
+      <div class="conf">
+        <label>Nivel de confianza del modelo</label>
+        <div class="bar"><i id="bar"></i></div>
+      </div>
+
+      <div class="sources">
+        <h2 style="font-size:17px;margin-top:25px">Fuentes integrables</h2>
+        <div class="source"><span>idealista / idealista data</span><span class="pill">API</span></div>
+        <div class="source"><span>Fotocasa</span><span class="pill">API / datos</span></div>
+        <div class="source"><span>Trovimap</span><span class="pill">Conector</span></div>
+        <div class="source"><span>pisos.com</span><span class="pill">Conector</span></div>
+        <div class="source"><span>RealAdvisor</span><span class="pill">Conector</span></div>
+        <div class="source"><span>Housfy</span><span class="pill">Conector</span></div>
+        <div class="source"><span>Catastro</span><span class="pill">Oficial</span></div>
+        <div class="source"><span>INE</span><span class="pill">API</span></div>
+        <div class="source"><span>Banco de España</span><span class="pill">API</span></div>
+        <div class="source"><span>Ministerio de Vivienda</span><span class="pill">Oficial</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="card report" id="report">
+    <h2>Informe preliminar</h2>
+    <pre id="reportText"></pre>
+  </section>
+
+  <div class="footer">© Óptima Inversiones Inmobiliarias · Motor de valoración orientativo · Datos externos sujetos a disponibilidad y licencia</div>
+</div>
+
+<script>
+const euro = n => new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const num = n => new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(n);
+
+function calculate(){
+  const sqm = Number(document.getElementById('sqm').value)||0;
+  if(!sqm){ alert('Introduce al menos la superficie construida.'); return; }
+
+  // DEMO: estimador local. En producción este bloque se sustituye por /api/valuation
+  // que consulta los conectores autorizados y el motor estadístico de Óptima.
+  const city = document.getElementById('city').value.trim().toLowerCase();
+  const type = document.getElementById('type').value;
+  let base = 2100;
+  const cityBases = {
+    madrid:3800, barcelona:3900, "santiago de compostela":2300,
+    alcorcon:2200, pontevedra:2100, vigo:2200, "a coruña":2500,
+    malaga:3400, valencia:2500, sevilla:2200, bilbao:3300,
+    jaen:1200, "jaén":1200
+  };
+  if(cityBases[city]) base=cityBases[city];
+
+  const adj = {
+    "Reformado / nuevo":1.10,"Buen estado":1.00,"A actualizar":.91,"A reformar":.80
+  }[document.getElementById('condition').value] || 1;
+
+  let factor=adj;
+  const plus = ['lift','garage','storage','terrace','balcony','pool','garden','views','exterior'];
+  plus.forEach(id=>{
+    if(document.getElementById(id).checked){
+      factor += ({lift:.025,garage:.035,storage:.012,terrace:.025,balcony:.012,pool:.035,garden:.035,views:.025,exterior:.015}[id]||0);
+    }
+  });
+  const year=Number(document.getElementById('year').value);
+  if(year>=2015) factor+=.025;
+  if(year && year<1970) factor-=.025;
+  if(type==='Chalet'||type==='Casa'||type==='Adosado') base*=1.04;
+  if(type==='Local'||type==='Oficina') base*=.85;
+  if(type==='Garaje') base*=.55;
+
+  const priceM2=base*factor;
+  const value=priceM2*sqm;
+  const low=value*.91, high=value*1.09;
+  const rentM2=Math.max(5.5, Math.min(20, priceM2*.004));
+  const rent=rentM2*sqm;
+  const yieldGross=value?rent*12/value*100:0;
+
+  // Confidence is deliberately conservative until live comparables are connected.
+  let confidence=58;
+  if(document.getElementById('city').value) confidence+=7;
+  if(document.getElementById('postal').value) confidence+=5;
+  if(document.getElementById('cadastre').value) confidence+=5;
+  if(document.getElementById('rooms').value) confidence+=4;
+  if(document.getElementById('year').value) confidence+=3;
+  confidence=Math.min(82,confidence);
+
+  document.getElementById('value').textContent=euro(value);
+  document.getElementById('range').textContent=`Rango orientativo: ${euro(low)} – ${euro(high)}`;
+  document.getElementById('sqmValue').textContent=euro(priceM2);
+  document.getElementById('rentValue').textContent=euro(rent)+'/mes';
+  document.getElementById('yieldValue').textContent=yieldGross.toFixed(2).replace('.',',')+' %';
+  document.getElementById('confidence').textContent=confidence+' %';
+  document.getElementById('bar').style.width=confidence+'%';
+
+  const address=document.getElementById('address').value||'Inmueble sin dirección';
+  document.getElementById('reportText').textContent =
+`INFORME PRELIMINAR ÓPTIMA
+
+Inmueble: ${address}
+Localización: ${document.getElementById('city').value||'—'}, ${document.getElementById('province').value||'—'}
+Tipo: ${type}
+Superficie: ${sqm} m²
+
+VALOR DE MERCADO ESTIMADO
+${euro(value)}
+
+RANGO ORIENTATIVO
+${euro(low)} – ${euro(high)}
+
+PRECIO UNITARIO ESTIMADO
+${euro(priceM2)} / m²
+
+ALQUILER ORIENTATIVO
+${euro(rent)} / mes
+
+RENTABILIDAD BRUTA ESTIMADA
+${yieldGross.toFixed(2).replace('.',',')} %
+
+NIVEL DE CONFIANZA DEL MODELO
+${confidence} %
+
+Fuentes previstas: idealista/data, Fotocasa, Trovimap, pisos.com, RealAdvisor, Housfy, Catastro, INE, Banco de España y Ministerio de Vivienda.
+
+Nota: el resultado mostrado en esta versión es un cálculo preliminar de demostración. La versión productiva debe alimentar el motor con datos obtenidos mediante APIs, licencias o fuentes oficiales autorizadas.`;
+  document.getElementById('report').style.display='block';
+}
+
+// API de producción (ejemplo):
+// POST /api/valuation
+// body: JSON con los campos del formulario
+// response: {value, low, high, price_m2, rent, confidence, sources[], comparables[]}
+</script>
+</body>
+</html>
