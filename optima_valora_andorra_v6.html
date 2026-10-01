@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Óptima · Avaluador Intel·ligent d'Immobles Andorra</title>
+<meta name="description" content="Valorador inmobiliario multimétodo de Óptima. Estima el valor de mercado mediante comparables, €/m² y modelos ponderados.">
+<style>
+:root{
+  --ink:#14211b; --muted:#6d7771; --line:#dfe5e1; --bg:#f5f7f5;
+  --card:#fff; --accent:#a88a4a; --accent2:#18372a; --soft:#eef3ef;
+  --danger:#a65c4a; --shadow:0 20px 60px rgba(20,33,27,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f7f8f6 0%,#eef2ee 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+.container{width:min(1160px,92%);margin:auto}
+header{padding:26px 0 12px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:12px;align-items:center;font-weight:800;letter-spacing:.08em}
+.logo{width:42px;height:42px;border:1px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-family:Georgia,serif;font-size:22px;border-radius:10px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;margin-top:3px}
+.badge{background:var(--soft);border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:12px;color:var(--accent2)}
+.hero{padding:54px 0 30px;text-align:center}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+h1{font-family:Georgia,serif;font-size:clamp(38px,6vw,72px);line-height:.98;margin:14px auto 18px;max-width:850px;font-weight:500}
+.hero p{max-width:720px;margin:auto;color:var(--muted);font-size:17px;line-height:1.65}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.form-card{padding:28px;margin:25px auto 55px}
+.step{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.step-number{width:30px;height:30px;border-radius:50%;background:var(--accent2);color:white;display:grid;place-items:center;font-size:13px;font-weight:800}
+.step h2{margin:0;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-size:12px;font-weight:700;color:#46514b}
+input,select{width:100%;border:1px solid #d7ded9;background:#fbfcfb;border-radius:12px;padding:13px 14px;font-size:15px;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--accent)}
+button{border:0;border-radius:13px;padding:15px 20px;font-weight:800;cursor:pointer}
+.primary{background:var(--accent2);color:#fff;width:100%;margin-top:22px;font-size:15px}
+.secondary{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.result{display:none;margin:0 auto 70px}
+.result.show{display:block}
+.result-top{padding:34px;background:var(--accent2);color:white;border-radius:24px 24px 0 0;position:relative;overflow:hidden}
+.result-top:after{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(255,255,255,.10);border-radius:50%;right:-90px;top:-150px}
+.result-top .eyebrow{color:#d6bd7e}
+.value{font-family:Georgia,serif;font-size:clamp(45px,7vw,76px);margin:7px 0}
+.range{color:#dbe4de}
+.result-body{padding:28px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:25px}
+.kpi{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px}
+.kpi b{display:block;font-size:21px;margin-top:6px}
+.kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{text-align:left;padding:15px 8px;border-bottom:1px solid var(--line);font-size:14px}
+.table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.table td:last-child,.table th:last-child{text-align:right}
+.score{display:inline-flex;padding:5px 9px;border-radius:999px;background:var(--soft);font-size:11px;font-weight:800}
+.disclaimer{margin-top:22px;padding:15px;border-left:3px solid var(--accent);background:#faf9f5;color:#59635e;font-size:12px;line-height:1.55}
+.cta{margin-top:25px;display:flex;gap:10px;flex-wrap:wrap}
+footer{padding:20px 0 50px;text-align:center;color:var(--muted);font-size:11px}
+@media(max-width:760px){
+ .grid{grid-template-columns:1fr 1fr}.field.full{grid-column:1/-1}
+ .kpis{grid-template-columns:1fr 1fr}
+ header .badge{display:none}
+}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.form-card,.result-body{padding:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="brand"><div class="logo">O</div><div>ÓPTIMA<small>INVERSIONS IMMOBILIÀRIES</small></div></div>
+  <div class="badge">AVALUACIÓ MULTIMÈTODE · ANDORRA · 2026</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Intel·ligència immobiliària</div>
+  <h1>Quant val realment el seu immoble?</h1>
+  <p>Introduza as características do imóvel e obtenha uma estimativa indicativa combinando comparáveis, preço por m², localização e um modelo ponderado.</p>
+</section>
+
+<section class="card form-card">
+  <div class="step"><div class="step-number">1</div><h2>Características do imóvel</h2></div>
+  <div class="grid">
+    <div class="field full">
+      <label>Adreça o zona</label>
+      <input id="address" placeholder="Ex.: Escaldes-Engordany, centre">
+      <div style="display:flex;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap">
+    </div>
+    <div class="field"><label>Tipo</label><select id="type" onchange="updateDynamicFields()">
+<option value="piso">Pis / apartament</option><option value="atico">Àtic / dúplex</option>
+<option value="casa">Casa / xalet</option><option value="adosado">Casa adossada / aparellada</option>
+<option value="villa">Villa / finca residencial</option><option value="local">Local comercial</option>
+<option value="oficina">Oficina</option><option value="nave">Nau / magatzem industrial</option>
+<option value="edificio">Edifici complet</option><option value="hotel">Hotel / allotjament turístic</option>
+<option value="garaje">Garatge / plaça d'aparcament</option><option value="trastero">Traster / box</option>
+<option value="terreno">Terreny / parcel·la</option><option value="rural">Finca rústica / explotació</option>
+<option value="otro">Altre immoble</option></select></div>
+    <div class="field"><label id="sqmLabel">Superfície construïda (m²)</label><input id="sqm" type="number" min="1" placeholder="120"></div>
+    <div class="field"><label>Superfície de parcel·la / terreny (m²)</label><input id="plot" type="number" min="0" placeholder="0"></div>
+    <div class="field"><label>Habitacions / unitats</label><input id="rooms" type="number" min="0" placeholder="3"></div>
+    <div class="field"><label>Banys</label><input id="baths" type="number" min="0" placeholder="2"></div>
+    <div class="field" id="floorField"><label>Planta</label><select id="floor"><option value="0">Baix / sense planta</option><option value="1">1a</option><option value="2">2a</option><option value="3">3a</option><option value="4">4a o superior</option></select></div>
+    <div class="field"><label>Estat</label><select id="condition">
+      <option value="1.06">Reformat / excel·lent</option><option value="1.00">Bon estat</option>
+      <option value=".92">Necessita actualització</option><option value=".82">Per reforma integral</option>
+    </select></div>
+    <div class="field"><label>Any aproximat</label><input id="year" type="number" min="1800" max="2026" placeholder="2005"></div>
+    <div class="field"><label>Extres i característiques</label><select id="extras">
+      <option value="1">Standard</option><option value="1.03">Ascensor / exterior</option>
+      <option value="1.07">Garatge / terrassa / bones vistes</option><option value="1.12">Premium: diverses característiques</option>
+    </select></div>
+    <div class="field" id="commercialField"><label>Situació / ús</label><select id="use">
+      <option value="1">Residencial / estàndard</option><option value="1.04">Ubicació comercial consolidada</option>
+      <option value="1.08">Alta demanda / zona prime</option>
+    </select></div>
+    <div class="field" id="occupancyField"><label>Rendibilitat / ocupació</label><select id="occupancy">
+      <option value="1">No aplicable</option><option value="1.03">Alto potencial</option><option value="1.07">Ingressos consolidats</option>
+    </select></div>
+    <div class="field" id="landField"><label>Classificació / aprofitament</label><select id="landUse">
+      <option value="1">Sense dades / estàndard</option><option value="1.10">Sòl urbà / edificable</option>
+      <option value=".82">Rústic / no edificable</option><option value="1.18">Alta edificabilitat / desenvolupament</option>
+    </select></div>
+  </div>
+  <div id="typeHint" style="margin-top:14px;padding:12px 14px;background:#faf9f5;border-left:3px solid var(--accent);font-size:12px;color:#59635e;line-height:1.5"></div>
+  <button class="primary" onclick="valuate()">CALCULAR AVALUACIÓ</button>
+</section>
+
+<section id="result" class="card result">
+  <div class="result-top">
+    <div class="eyebrow">Estimació indicativa</div>
+    <div class="value" id="mainValue">—</div>
+    <div class="range" id="range">—</div>
+  </div>
+  <div class="result-body">
+    <div class="kpis">
+      <div class="kpi"><span>Preu / m²</span><b id="ppsqm">—</b></div>
+      <div class="kpi"><span>Confiança</span><b id="confidence">—</b></div>
+      <div class="kpi"><span>Inferior</span><b id="low">—</b></div>
+      <div class="kpi"><span>Superior</span><b id="high">—</b></div>
+    </div>
+
+    <div class="step"><div class="step-number">2</div><h2>Comparació de mètodes</h2></div>
+    <table class="table">
+      <thead><tr><th>Método</th><th>Descripció</th><th>Estimació</th></tr></thead>
+      <tbody id="methods"></tbody>
+    </table>
+
+    <div class="disclaimer"><strong>Important:</strong> aquesta versió presenta una estimació orientativa mitjançant un model parametritzat amb referències de mercat d'Andorra. No consulta en temps real portals, fonts oficials, bancs o taxadors. Per a una valoració professional cal integrar fonts reals i autoritzades, amb la metodologia i la data d'actualització documentades.</div>
+    <div class="cta">
+      <a class="primary" style="width:auto;text-decoration:none;display:inline-block;text-align:center"
+         href="https://www.laoptima.com/contactooptima" target="_blank" rel="noopener noreferrer">
+         VULL UNA VALORACIÓ PROFESSIONAL
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>Óptima · Valoració immobiliària intel·ligent · Principat d'Andorra · Eina orientativa, no constitueix una taxació oficial.</footer>
+</div>
+
+<script>
+const euro = n => new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const num = n => new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(n);
+
+function propertyProfile(type){
+ const p={
+  piso:[7840,'Superfície construïda (m²)',"Valoració residencial: superfície, planta, estat, habitacions, banys i característiques."],
+  atico:[9000,'Superfície construïda (m²)',"Es ponderen especialment planta, terrassa, vistes, orientació i característiques premium."],
+  casa:[5763,'Superfície construïda (m²)',"Model per a cases: habitatge, parcel·la, estat, vistes i característiques exteriors."],
+  adosado:[5200,'Superfície construïda (m²)',"Model per a cases adossades i aparellades, amb ajustos per parcel·la i urbanització."],
+  villa:[6500,'Superfície construïda (m²)',"Model residencial premium: habitatge, parcel·la, vistes, extres i potencial."],
+  local:[4300,'Superfície construïda (m²)',"Model terciari: superfície, activitat, ubicació comercial, estat i rendibilitat potencial."],
+  oficina:[4700,'Superfície construïda (m²)',"Model d'oficines: superfície, ubicació, estat i potencial d'ús."],
+  nave:[2200,'Superfície construïda (m²)',"Model industrial: superfície, parcel·la, ús, accessibilitat i ubicació."],
+  edificio:[5000,'Superfície construïda total (m²)',"Valoració global: superfície, unitats, parcel·la, ús, estat i potencial."],
+  hotel:[4800,'Superfície construïda (m²)',"Model d'explotació turística: superfície, unitats, ocupació, ubicació i estat."],
+  garaje:[30000,"Nombre de places / unitats","Per a garatges, introdueixi el nombre de places o unitats. La superfície és opcional."],
+  trastero:[2500,'Superfície (m²)',"Valoració orientativa per superfície i característiques del traster o box."],
+  terreno:[650,'Superfície del terreny (m²)',"Model de sòl: superfície, classificació i aprofitament."],
+  rural:[80,'Superfície de la finca (m²)',"Model rústic orientatiu: superfície, construccions, ús i característiques."],
+  otro:[4000,'Superfície construïda (m²)',"Model genèric orientatiu; es recomana una valoració professional per a immobles singulars."]
+ };
+ const x=p[type]||p.otro; return {base:x[0],label:x[1],hint:x[2]};
+}
+function basePrice(type,address){
+ const a=(address||'').toLowerCase(), p=propertyProfile(type).base;
+ const zones=[
+  ['escaldes-engordany',1.327],['escaldes',1.327],['andorra la vella',1.118],
+  ['ordino',.885],['la massana',.897],['canillo',.807],['encamp',.727],
+  ['sant julià de lòria',.602],['sant julia de loria',.602],['el vilar',1.263],
+  ['el serrat',1.17],['escàs',1.16],['escas',1.16],['el tarter',1.03],
+  ['soldeu',.95],['arinsal',.82],['pas de la casa',.62],['ranso',.67],
+  ['rànsol',.67],['santa coloma',.72],['la cortinada',.70],['els cortals',.58],['incles',.66]
+ ];
+ for(const [z,m] of zones) if(a.includes(z)) return p*m;
+ return p;
+}
+
+function basePrice(type,address){
+ const a=(address||'').toLowerCase();
+ let p=propertyProfile(type).base;
+ // Valores indicativos de demonstração. Em produção: substituir por dados de mercado/API autorizados.
+ const zones=[
+  ['lisboa',1.00],['oeiras',1.12],['cascais',1.25],['sintra',.93],
+  ['porto',.82],['vila nova de gaia',.70],['gaia',.70],['braga',.58],
+  ['coimbra',.57],['aveiro',.63],['leiria',.55],['setúbal',.70],
+  ['faro',.78],['albufeira',.92],['lagos',.88],['portimão',.67],
+  ['vilamoura',1.05],['algarve',.82],['madeira',.76],['funchal',.88],
+  ['açores',.58],['ponta delgada',.62]
+ ];
+ for(const [z,m] of zones) if(a.includes(z)) p*=m;
+ return p;
+}
+
+function updateDynamicFields(){
+  const type=document.getElementById('type').value;
+  const profile=propertyProfile(type);
+  document.getElementById('sqmLabel').textContent=profile.label;
+  document.getElementById('typeHint').textContent=profile.hint;
+
+  const floorTypes=['piso','atico'];
+  document.getElementById('floorField').style.display=floorTypes.includes(type)?'flex':'none';
+
+  const commercial=['local','oficina','nave'];
+  document.getElementById('commercialField').style.display=commercial.includes(type)?'flex':'none';
+
+  const income=['hotel','local','oficina','nave','edificio','rural'];
+  document.getElementById('occupancyField').style.display=income.includes(type)?'flex':'none';
+
+  const land=['terreno','rural','casa','adosado','villa','nave'];
+  document.getElementById('landField').style.display=land.includes(type)?'flex':'none';
+
+  const landTypes=['terreno','rural'];
+  if(landTypes.includes(type)){
+    document.getElementById('sqm').placeholder='Opcional / 0';
+    document.getElementById('plot').value='';
+  } else if(type==='garaje'){
+    document.getElementById('sqm').placeholder='Opcional';
+    document.getElementById('rooms').placeholder='Plazas';
+  } else {
+    document.getElementById('sqm').placeholder='120';
+    document.getElementById('rooms').placeholder=type==='hotel'||type==='edificio'?'10':'3';
+  }
+}
+
+function valuate(){
+  const address=document.getElementById('address').value.trim();
+  const type=document.getElementById('type').value;
+  const sqm=Number(document.getElementById('sqm').value||0);
+  const plot=Number(document.getElementById('plot').value||0);
+  const rooms=Number(document.getElementById('rooms').value||0);
+  const baths=Number(document.getElementById('baths').value||0);
+  const floor=Number(document.getElementById('floor').value||0);
+  const condition=Number(document.getElementById('condition').value);
+  const year=Number(document.getElementById('year').value||2000);
+  const extras=Number(document.getElementById('extras').value);
+  const use=Number(document.getElementById('use').value);
+  const occupancy=Number(document.getElementById('occupancy').value);
+  const landUse=Number(document.getElementById('landUse').value);
+
+  if(type==='garaje'){
+    if(rooms<1 && sqm<1){alert('Introduce al menos el número de plazas o una superficie válida.');return;}
+  } else if(type==='terreno'||type==='rural'){
+    if(plot<1 && sqm<1){alert('Introduce la superficie de la finca o terreno.');return;}
+  } else if(sqm<1){
+    alert('Introduce una superficie válida.');return;
+  }
+
+  const profile=propertyProfile(type);
+  const base=basePrice(type,address);
+  const ageAdj=Math.max(.88,Math.min(1.06,1+(year-2000)*0.0015));
+
+  let model;
+  if(type==='garaje'){
+    const units=Math.max(1,rooms);
+    model=units*base*condition*extras*(address?1.02:1);
+  } else if(type==='terreno'){
+    model=(plot||sqm)*base*landUse*use;
+  } else if(type==='rural'){
+    const land=(plot||sqm)*base*landUse;
+    const buildings=sqm>0 && plot>0 ? sqm*propertyProfile('casa').base*.65*condition : 0;
+    model=(land+buildings)*use*occupancy;
+  } else {
+    const residential=['piso','atico','casa','adosado','villa'].includes(type);
+    const roomAdj=residential ? 1+Math.min(.07,rooms*.012)+Math.min(.04,baths*.01) : 1;
+    const floorAdj=(type==='piso'||type==='atico') ? (floor===0?.96:1+(Math.min(floor,5)*.012)) : 1;
+    const parcelAdj=(['casa','adosado','villa','nave'].includes(type) && plot>0)
+      ? 1+Math.min(.18,Math.log10(Math.max(1,plot/Math.max(1,sqm)))*.06) : 1;
+    model=sqm*base*condition*extras*ageAdj*roomAdj*floorAdj*parcelAdj*use*occupancy;
+  }
+
+  const comparable=model*(0.96 + Math.min(0.04,rooms*.003));
+  const sqmMethod=(type==='garaje')
+    ? Math.max(1,sqm)*base*condition*extras
+    : (type==='terreno'||type==='rural')
+      ? (plot||sqm)*base*landUse
+      : sqm*base*condition;
+  const location=model*(0.98 + (address?0.02:0));
+  const conservative=model*.92;
+  const premium=model*1.08;
+
+  const weights=[.34,.25,.18,.13,.10];
+  const values=[comparable,sqmMethod,location,conservative,premium];
+  const weighted=values.reduce((s,v,i)=>s+v*weights[i],0);
+  const spread=(Math.max(...values)-Math.min(...values))/Math.max(1,weighted);
+  const dataBonus=address?5:0;
+  const confidence=Math.round(Math.max(55,Math.min(94,94-spread*100+dataBonus)));
+  const low=weighted*(1-.055-Math.max(0,spread-.05)*.35);
+  const high=weighted*(1+.055+Math.max(0,spread-.05)*.35);
+
+  document.getElementById('mainValue').textContent=euro(weighted);
+  document.getElementById('range').textContent=`Intervalo estimado: ${euro(low)} – ${euro(high)}`;
+  const denominator=(type==='garaje')?Math.max(1,rooms):(plot||sqm);
+  document.getElementById('ppsqm').textContent=euro(weighted/denominator);
+  document.getElementById('confidence').textContent=confidence+'/100';
+  document.getElementById('low').textContent=euro(low);
+  document.getElementById('high').textContent=euro(high);
+
+  const rows=[
+    ['Comparables','Ajuste sobre mercado estimado',comparable],
+    ['€/unidade / m²','Área ou unidades × referência',sqmMethod],
+    ['Modelo ubicación','Localização + características',location],
+    ['Cenário prudente','-8% aprox. sobre el modelo',conservative],
+    ['Cenário premium','+8% aprox. sobre el modelo',premium]
+  ];
+  document.getElementById('methods').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td><strong>${euro(r[2])}</strong></td></tr>`).join('');
+
+  const result=document.getElementById('result');
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+updateDynamicFields();
+</script>
+</body>
+</html>
