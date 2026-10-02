@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Óptima · Intelligent Property Valuator · USA</title>
+<style>
+:root{--g:#0A6D37;--n:#102A43;--gold:#C9A227;--bg:#f5f7f6}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f7faf8,#eef3f0);font-family:Arial,sans-serif;color:#17202a}.wrap{max-width:1080px;margin:auto;padding:24px 16px 50px}
+header,.card{border-radius:22px}.head{background:var(--n);color:white;padding:28px;box-shadow:0 15px 40px #102a4320}.brand{font-size:13px;font-weight:bold;letter-spacing:.08em}.brand span{color:var(--gold)}h1{font-size:clamp(28px,5vw,44px);margin:10px 0 6px}.sub{color:#dce7e2}.badge{display:inline-block;background:var(--g);padding:8px 12px;border-radius:30px;font-size:12px;font-weight:bold;margin-top:15px}
+.card{background:white;border:1px solid #dfe5e1;padding:24px;margin-top:18px;box-shadow:0 8px 30px #102a4310}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}.field input,.field select{width:100%;padding:13px;border:1px solid #cfd8d3;border-radius:12px;font-size:15px;background:white}.actions{margin-top:18px}button,.cta a{background:var(--g);color:white;border:0;border-radius:12px;padding:14px 19px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+.result{display:none}.top{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.valuebox{background:var(--n);color:white;border-radius:18px;padding:24px}.small{font-size:12px;color:#cbd8d2}.value{font-size:clamp(34px,7vw,58px);font-weight:800;margin:8px 0}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}.metric{background:#f7faf8;border:1px solid #dfe5e1;border-radius:15px;padding:15px}.metric b{display:block;color:var(--n);font-size:19px;margin-top:5px}.bar{height:11px;background:#e6ece8;border-radius:99px;overflow:hidden;margin:18px 0 8px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--gold))}table{width:100%;border-collapse:collapse}td{padding:10px;border-bottom:1px solid #edf0ee}td:last-child{text-align:right;font-weight:bold}.note{font-size:12px;color:#667085;line-height:1.55;margin-top:15px}.cta{background:linear-gradient(135deg,#f0f7f2,#fff8df)}
+@media(max-width:700px){.grid,.top{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body><div class="wrap">
+<header class="head"><div class="brand">ÓPTIMA <span>INVERSIONES INMOBILIARIAS</span></div><h1>Intelligent Property Valuator · USA</h1><p class="sub">Multi-method indicative property valuation adapted to the United States market.</p><span class="badge">MULTI-METHOD VALUATION · USA · 2026</span></header>
+
+<section class="card"><h2>What is your property worth?</h2><div class="grid">
+<div class="field full"><label>Property address / ZIP Code</label><input id="address" placeholder="e.g. Miami, FL 33139"></div>
+<div class="field"><label>Property type</label><select id="type">
+<option value="single">Single-family home</option><option value="condo">Condominium</option><option value="townhome">Townhouse</option><option value="multifamily">Multi-family / Duplex</option><option value="luxury">Luxury residence / Villa</option><option value="commercial">Retail / Commercial</option><option value="office">Office</option><option value="industrial">Industrial / Warehouse</option><option value="building">Apartment building</option><option value="hotel">Hotel / Hospitality</option><option value="parking">Parking / Garage</option><option value="storage">Storage unit</option><option value="land">Land / Lot</option><option value="rural">Ranch / Agricultural land</option><option value="other">Other property</option></select></div>
+<div class="field"><label>State / Market</label><select id="market">
+<option value="national">United States · National reference</option><option value="ca">California</option><option value="ny">New York</option><option value="fl">Florida</option><option value="tx">Texas</option><option value="wa">Washington</option><option value="ma">Massachusetts</option><option value="nj">New Jersey</option><option value="az">Arizona</option><option value="il">Illinois</option><option value="ga">Georgia</option><option value="dc">Washington, D.C.</option><option value="co">Colorado</option><option value="nc">North Carolina</option><option value="nv">Nevada</option><option value="other">Other state / market</option></select></div>
+<div class="field"><label>Living / building area (ft²)</label><input id="area" type="number" min="1" placeholder="e.g. 1,850"></div>
+<div class="field"><label>Lot / land area (ft²)</label><input id="lot" type="number" min="0" placeholder="Optional"></div>
+<div class="field"><label>Bedrooms / units</label><input id="rooms" type="number" min="0" placeholder="e.g. 3"></div>
+<div class="field"><label>Bathrooms</label><input id="baths" type="number" min="0" step=".5" placeholder="e.g. 2.5"></div>
+<div class="field"><label>Floor / level</label><select id="floor"><option value="0">Ground / single level</option><option value="1">1st–2nd floor</option><option value="2">3rd–5th floor</option><option value="3">6th+ floor</option><option value="penthouse">Penthouse / top floor</option></select></div>
+<div class="field"><label>Condition</label><select id="condition"><option value="new">New / renovated</option><option value="excellent">Excellent</option><option value="good" selected>Good</option><option value="fair">Fair / needs updates</option><option value="poor">Major renovation</option></select></div>
+<div class="field"><label>Year built</label><input id="year" type="number" min="1600" max="2026" placeholder="e.g. 2018"></div>
+<div class="field full"><label>Features & amenities</label><input id="extras" placeholder="Pool, garage, waterfront, elevator, view, solar, remodeled kitchen..."></div>
+</div><div class="actions"><button onclick="calculate()">CALCULATE INDICATIVE VALUE</button></div></section>
+
+<section class="card result" id="result"><div class="top"><div class="valuebox"><div class="small">INDICATIVE ESTIMATED VALUE</div><div class="value" id="value">$0</div><div class="small">USD · model-based estimate</div></div><div class="metrics"><div class="metric">Estimated $/ft²<b id="psf">$0</b></div><div class="metric">Estimated range<b id="range">$0</b></div><div class="metric">Model confidence<b id="confidence">Medium</b></div><div class="metric">Market reference<b id="ref">USA</b></div></div></div>
+<div class="bar"><i id="rangebar" style="width:88%"></i></div><div class="small">LOW <span id="low"></span> · HIGH <span id="high"></span></div>
+<h3>Valuation components</h3><table><tr><td>Base market reference</td><td id="base"></td></tr><tr><td>Property type adjustment</td><td id="typeAdj"></td></tr><tr><td>Condition / age adjustment</td><td id="condAdj"></td></tr><tr><td>Features / characteristics</td><td id="extraAdj"></td></tr><tr><td>Indicative value</td><td id="finalRow"></td></tr></table>
+<p class="note">This calculator is an indicative parametrized model. It is not an appraisal, CMA, broker price opinion, tax assessment, or USPAP-compliant appraisal, and it does not query live MLS, county assessor, public-record, Zillow, Redfin or other APIs.</p></section>
+
+<section class="card cta"><h3>Need a professional valuation?</h3><p>For a property-specific analysis, comparable-property study and professional assessment, contact Óptima.</p><a href="https://www.laoptima.com/contactooptima" target="_blank" rel="noopener">REQUEST A PROFESSIONAL VALUATION</a></section>
+</div>
+<script>
+const B={single:212,condo:205,townhome:210,multifamily:235,luxury:325,commercial:260,office:245,industrial:145,building:225,hotel:285,parking:180,storage:120,land:18,rural:4,other:200};
+const M={national:1,ca:2.05,ny:1.85,fl:1.22,tx:.92,wa:1.55,ma:1.78,nj:1.58,az:1.04,il:.91,ga:.88,dc:1.72,co:1.28,nc:.91,nv:1.12,other:.95};
+const N={national:"USA",ca:"California",ny:"New York",fl:"Florida",tx:"Texas",wa:"Washington",ma:"Massachusetts",nj:"New Jersey",az:"Arizona",il:"Illinois",ga:"Georgia",dc:"Washington, D.C.",co:"Colorado",nc:"North Carolina",nv:"Nevada",other:"Other market"};
+const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
+function calculate(){
+let t=type.value,m=market.value,a=+area.value||0,l=+lot.value||0,r=+rooms.value||0,b=+baths.value||0;
+if(!a&&!["land","rural"].includes(t)){alert("Please enter the living/building area in ft².");return}
+let base=B[t]*M[m],c=1,cl="Standard",v;
+if(condition.value==="new")c=1.08,cl="+8%";else if(condition.value==="excellent")c=1.05,cl="+5%";else if(condition.value==="fair")c=.92,cl="−8%";else if(condition.value==="poor")c=.78,cl="−22%";
+let y=+year.value||0;if(y>=2020)c*=1.03;else if(y&&y<1980)c*=.96;
+let tf=1;if(t==="condo"&&floor.value==="penthouse")tf=1.10;if(t==="condo"&&floor.value==="3")tf=1.05;
+let f=1,e=(extras.value||"").toLowerCase();["pool","waterfront","ocean","beach","lake","view","garage","elevator","remodeled","renovated","solar"].forEach(x=>{if(e.includes(x))f*=1.025});if(r>=5)f*=1.025;if(b>=4)f*=1.02;if(l>a*1.5&&["single","townhome","luxury","multifamily"].includes(t))f*=1.035;
+if(t==="parking")v=30000*M[m];else if(t==="storage")v=120*M[m]*Math.max(a,50);else if(t==="land")v=base*Math.max(l,a);else if(t==="rural")v=base*Math.max(l,a);else v=a*base*c*tf*f;
+let u=["land","rural"].includes(t)?.30:.12,lo=v*(1-u),hi=v*(1+u);
+value.textContent=money(v);psf.textContent=money(v/Math.max(a,1));range.textContent=money(lo)+" – "+money(hi);low.textContent=money(lo);high.textContent=money(hi);base.textContent=money(base)+"/ft²";typeAdj.textContent=tf===1?"Reference":((tf-1)*100).toFixed(1)+"%";condAdj.textContent=cl;extraAdj.textContent=((f-1)*100).toFixed(1)+"%";finalRow.textContent=money(v);ref.textContent=N[m];confidence.textContent=u<=.12?"Medium":"Indicative";rangebar.style.width=(100-u*100)+"%";result.style.display="block";result.scrollIntoView({behavior:"smooth"});
+}
+</script></body></html>
