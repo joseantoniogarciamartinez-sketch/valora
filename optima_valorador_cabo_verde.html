@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Óptima Cabo Verde · Valorador Inmobiliario</title>
+<meta name="description" content="Valorador inmobiliario orientativo para Cabo Verde, con estimación en escudos caboverdianos y euros.">
+<style>
+:root{--ink:#17251e;--muted:#68766e;--line:#dce4de;--bg:#f3f6f3;--green:#183b2b;--gold:#b49a5a;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f8faf8,#edf2ee);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+.wrap{width:min(1120px,92%);margin:auto}header{display:flex;justify-content:space-between;align-items:center;padding:24px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.1em}.logo{width:43px;height:43px;border:1px solid var(--gold);border-radius:11px;display:grid;place-items:center;color:var(--gold);font:25px Georgia}
+.brand small{display:block;font-size:9px;letter-spacing:.16em;color:var(--muted);margin-top:4px}.tag{font-size:11px;color:var(--green);background:#e9f0eb;border:1px solid var(--line);border-radius:99px;padding:9px 13px}
+.hero{text-align:center;padding:48px 0 25px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.2em;font-weight:800;text-transform:uppercase}
+h1{font:500 clamp(38px,6vw,68px)/1.02 Georgia,serif;max-width:850px;margin:13px auto 17px}.hero p{max-width:730px;margin:auto;color:var(--muted);line-height:1.7}
+.card{background:var(--white);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 55px #15271d12}.form{padding:27px;margin:24px auto 55px}
+.section{display:flex;gap:10px;align-items:center;margin:5px 0 20px}.n{background:var(--green);color:white;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800}.section h2{font-size:17px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}label{font-size:12px;font-weight:750;color:#4b5a51}
+input,select{width:100%;padding:13px;border:1px solid #d5ded7;border-radius:11px;background:#fbfcfb;color:var(--ink);font-size:14px;min-width:0}input:focus,select:focus{outline:2px solid #c7b47e55;border-color:var(--gold)}
+.hint{font-size:11px;color:var(--muted);line-height:1.5}.idbox{background:#f7f9f7;border:1px solid var(--line);border-radius:14px;padding:15px;margin-top:14px}
+button{border:0;border-radius:12px;padding:14px 18px;font-weight:800;cursor:pointer}.primary{background:var(--green);color:white;width:100%;margin-top:21px}.secondary{background:white;border:1px solid var(--line);color:var(--green);padding:10px 13px;font-size:12px}
+.result{display:none;margin:0 auto 60px;overflow:hidden}.result.show{display:block}.top{background:var(--green);color:white;padding:31px;position:relative}.top:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #ffffff20;border-radius:50%;right:-90px;top:-150px}
+.top .eyebrow{color:#d9c58d}.price{font:clamp(42px,7vw,70px) Georgia,serif;margin:8px 0}.sub{color:#dce7df;font-size:13px}
+.body{padding:27px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:26px}.stat{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px}.stat span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.stat b{display:block;font-size:19px;margin-top:7px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px 8px;border-bottom:1px solid var(--line);font-size:13px}th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}td:last-child,th:last-child{text-align:right}
+.note{margin-top:20px;padding:15px;border-left:3px solid var(--gold);background:#faf9f5;color:#58655d;font-size:11px;line-height:1.65}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.actions .primary{width:auto;margin:0}.actions .secondary{font-size:12px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px 0 45px}
+@media(max-width:720px){.grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.tag{display:none}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.form,.body{padding:19px}}
+@media print{body{background:white}.form,header,.hero,footer,.actions{display:none!important}.result{display:block!important;box-shadow:none;border:0}.top{print-color-adjust:exact}}
+</style></head>
+<body><div class="wrap">
+<header><div class="brand"><div class="logo">O</div><div>ÓPTIMA<small>INVERSIONES INMOBILIARIAS · CABO VERDE</small></div></div><div class="tag">VALORADOR MULTIMÉTODO · CV</div></header>
+<section class="hero"><div class="eyebrow">Inteligencia inmobiliaria · Cabo Verde</div><h1>Descubre el valor de tu inmueble en Cabo Verde</h1><p>Estimación orientativa adaptada a las islas y municipios caboverdianos. Contrasta distintos escenarios y consulta el resultado en escudos caboverdianos (CVE) y euros (EUR).</p></section>
+
+<section class="card form">
+<div class="section"><div class="n">1</div><h2>Localización e identificación del inmueble</h2></div>
+<div class="grid">
+<div class="field"><label>Isla</label><select id="island" onchange="updateMunicipalities()">
+<option value="Santiago">Santiago</option><option value="São Vicente">São Vicente</option><option value="Sal">Sal</option><option value="Boa Vista">Boa Vista</option><option value="Santo Antão">Santo Antão</option><option value="Fogo">Fogo</option><option value="São Nicolau">São Nicolau</option><option value="Maio">Maio</option><option value="Brava">Brava</option></select></div>
+<div class="field"><label>Municipio / localidad</label><select id="municipality"></select></div>
+<div class="field"><label>Zona / barrio / dirección</label><input id="address" placeholder="Ej. Santa Maria, zona céntrica"></div>
+<div class="field full"><label>Identificador predial (opcional)</label><div class="grid" style="grid-template-columns:repeat(2,1fr)">
+<div class="field"><input id="nip" placeholder="NIP — Número de Identificação Predial"></div><div class="field"><input id="cip" placeholder="CIP — Certidão de Identificação Predial"></div>
+<div class="field"><input id="matricial" placeholder="Matriz / artigo matricial"></div><div class="field"><input id="registry" placeholder="Registo predial (n.º / conservatória)"></div></div>
+<div class="hint">En Cabo Verde no debe asumirse que existe una “referencia catastral” idéntica a la española. Según la zona y situación registral pueden ser relevantes el NIP, la CIP, la matriz predial o el registro predial. Estos campos identifican el inmueble en el informe; no consultan automáticamente las bases públicas.</div></div>
+</div>
+<div class="section" style="margin-top:27px"><div class="n">2</div><h2>Características del inmueble</h2></div>
+<div class="grid">
+<div class="field"><label>Tipo de inmueble</label><select id="type"><option value="apartment">Apartamento / vivienda</option><option value="villa">Moradia / villa</option><option value="commercial">Local comercial</option><option value="hotel">Hotel / alojamiento turístico</option><option value="land">Terreno / lote</option><option value="industrial">Nave / industrial</option></select></div>
+<div class="field"><label>Superficie construida (m²)</label><input id="area" type="number" min="1" placeholder="100"></div>
+<div class="field"><label>Superficie de parcela (m²)</label><input id="plot" type="number" min="0" placeholder="Opcional"></div>
+<div class="field"><label>Habitaciones</label><input id="rooms" type="number" min="0" placeholder="2"></div>
+<div class="field"><label>Baños</label><input id="baths" type="number" min="0" placeholder="1"></div>
+<div class="field"><label>Estado</label><select id="condition"><option value="1.07">Nuevo / reformado</option><option value="1">Buen estado</option><option value=".92">Necesita actualización</option><option value=".82">Para reforma integral</option><option value=".72">Obra inacabada</option></select></div>
+<div class="field"><label>Año de construcción</label><input id="year" type="number" min="1800" max="2026" placeholder="2015"></div>
+<div class="field"><label>Ubicación / entorno</label><select id="location"><option value="1">Zona residencial estándar</option><option value="1.12">Centro urbano / servicios</option><option value="1.18">Zona turística consolidada</option><option value="1.22">Primera línea / vistas al mar</option><option value=".90">Periferia / acceso limitado</option></select></div>
+<div class="field"><label>Equipamiento y extras</label><select id="extras"><option value="1">Estándar</option><option value="1.04">Balcón / terraza</option><option value="1.08">Piscina / jardín / parking</option><option value="1.13">Vistas mar + terraza + piscina</option></select></div>
+<div class="field"><label>Uso actual</label><select id="use"><option value="residential">Residencial</option><option value="holiday">Turístico / vacacional</option><option value="rental">Alquilado</option><option value="vacant">Vacío</option><option value="development">Para desarrollo</option></select></div>
+</div>
+<button class="primary" onclick="valuate()">CALCULAR VALORACIÓN</button>
+</section>
+
+<section class="card result" id="result"><div class="top"><div class="eyebrow">Estimación orientativa · Cabo Verde</div><div class="price" id="eur">—</div><div class="sub" id="cve">—</div><div class="sub" id="range" style="margin-top:8px">—</div></div>
+<div class="body"><div class="stats">
+<div class="stat"><span>Precio estimado / m²</span><b id="sqmprice">—</b></div><div class="stat"><span>Confianza del modelo</span><b id="confidence">—</b></div><div class="stat"><span>Escenario inferior</span><b id="low">—</b></div><div class="stat"><span>Escenario superior</span><b id="high">—</b></div></div>
+<div class="section"><div class="n">3</div><h2>Contraste de métodos</h2></div>
+<table><thead><tr><th>Método</th><th>Base del cálculo</th><th>Valor (EUR)</th></tr></thead><tbody id="methods"></tbody></table>
+<div class="note"><b>Transparencia metodológica:</b> esta versión es un prototipo de cálculo y no consulta en tiempo real anuncios, transacciones ni registros. Los valores base por isla/localidad son hipótesis iniciales de trabajo, no estadísticas oficiales de precios de compraventa. El coste medio de construcción publicado oficialmente no equivale al valor de mercado. La valoración final debe calibrarse con comparables verificables y datos locales. El resultado no es una tasación oficial ni una garantía de precio.</div>
+<div class="actions"><button class="primary" onclick="emailLead()">SOLICITAR VALORACIÓN PROFESIONAL</button><button class="secondary" onclick="window.print()">IMPRIMIR / GUARDAR PDF</button></div></div></section>
+<footer>Óptima · Valorador Cabo Verde · CVE y EUR · Herramienta orientativa</footer></div>
+<script>
+const fx=110.265; // tipo de cambio fijo oficial de referencia: 1 EUR = 110,265 CVE
+const municipalities={
+"Santiago":["Praia","Ribeira Grande de Santiago","São Domingos","São Lourenço dos Órgãos","São Salvador do Mundo","Santa Catarina","São Miguel","Tarrafal","Santa Cruz"],
+"São Vicente":["Mindelo / São Vicente"],
+"Sal":["Espargos","Santa Maria"],
+"Boa Vista":["Sal Rei","Rabil"],
+"Santo Antão":["Ribeira Grande","Paul","Porto Novo"],
+"Fogo":["São Filipe","Mosteiros","Santa Catarina do Fogo"],
+"São Nicolau":["Ribeira Brava","Tarrafal de São Nicolau"],
+"Maio":["Porto Inglês / Maio"],
+"Brava":["Nova Sintra"]
+};
+// Valores iniciales orientativos EUR/m². Deben sustituirse por comparables y datos de mercado contrastados.
+const base={
+"Santiago":{apartment:1050,villa:1250,commercial:1000,hotel:1450,land:95,industrial:650},
+"São Vicente":{apartment:1250,villa:1450,commercial:1100,hotel:1550,land:110,industrial:650},
+"Sal":{apartment:1750,villa:2100,commercial:1450,hotel:2300,land:150,industrial:750},
+"Boa Vista":{apartment:1550,villa:1900,commercial:1300,hotel:2100,land:130,industrial:700},
+"Santo Antão":{apartment:800,villa:950,commercial:750,hotel:1100,land:55,industrial:450},
+"Fogo":{apartment:850,villa:1000,commercial:800,hotel:1100,land:60,industrial:450},
+"São Nicolau":{apartment:800,villa:900,commercial:700,hotel:1000,land:50,industrial:400},
+"Maio":{apartment:950,villa:1100,commercial:850,hotel:1250,land:75,industrial:500},
+"Brava":{apartment:750,villa:900,commercial:650,hotel:950,land:45,industrial:350}
+};
+function updateMunicipalities(){const island=document.getElementById('island').value;document.getElementById('municipality').innerHTML=municipalities[island].map(x=>`<option>${x}</option>`).join('')}
+updateMunicipalities();
+const money=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const esc=n=>new Intl.NumberFormat('pt-PT',{maximumFractionDigits:0}).format(n)+' CVE';
+function valuate(){
+ const island=document.getElementById('island').value, municipality=document.getElementById('municipality').value;
+ const address=document.getElementById('address').value, type=document.getElementById('type').value;
+ const area=Number(document.getElementById('area').value), plot=Number(document.getElementById('plot').value||0);
+ if(!area||area<=0){alert('Introduce una superficie construida válida.');return}
+ const rooms=Number(document.getElementById('rooms').value||0),baths=Number(document.getElementById('baths').value||0);
+ const condition=Number(document.getElementById('condition').value),loc=Number(document.getElementById('location').value),extras=Number(document.getElementById('extras').value);
+ const year=Number(document.getElementById('year').value||2010),age=Math.max(.92,Math.min(1.04,1+(year-2010)*.0015));
+ const b=base[island][type];
+ let locality=1;
+ const m=municipality.toLowerCase(),a=address.toLowerCase();
+ if((island==='Sal'&&m.includes('santa maria'))||(island==='Boa Vista'&&m.includes('sal rei')))locality=1.12;
+ if(island==='Santiago'&&m==='praia')locality=1.08;
+ if(island==='São Vicente')locality=1.05;
+ const roomsAdj=['apartment','villa'].includes(type)?1+Math.min(.045,rooms*.009)+Math.min(.025,baths*.008):1;
+ const model=area*b*condition*loc*extras*age*roomsAdj*locality;
+ const comparable=model*.97,zone=area*b*locality,feature=model*1.025,conservative=model*.91,upper=model*1.09;
+ const vals=[comparable,zone,feature,conservative,upper],weights=[.30,.25,.20,.15,.10];
+ const mean=vals.reduce((s,v,i)=>s+v*weights[i],0);
+ const landValue=(type==='land'&&plot>0)?plot*b*.72:0;
+ const total=type==='land'?Math.max(mean,landValue):mean;
+ const low=total*.91,high=total*1.09;
+ const confidence=Math.round(66+Math.min(15,(address?4:0)+(plot?2:0)+(year?2:0)+(rooms?2:0)+(document.getElementById('nip').value||document.getElementById('cip').value?5:0)));
+ document.getElementById('eur').textContent=money(total);
+ document.getElementById('cve').textContent=esc(total*fx)+' · cambio de referencia 1 EUR = 110,265 CVE';
+ document.getElementById('range').textContent=`Rango orientativo: ${money(low)} – ${money(high)}`;
+ document.getElementById('sqmprice').textContent=money(total/area)+'/m²';
+ document.getElementById('confidence').textContent=confidence+'/100';
+ document.getElementById('low').textContent=money(low);document.getElementById('high').textContent=money(high);
+ const rows=[['Comparables simulados','Ajuste base del modelo',comparable],['Referencia €/m²','Área × referencia inicial por isla',zone],['Características','Ubicación, estado y extras',feature],['Escenario prudente','-9% respecto al valor central',conservative],['Escenario alto','+9% respecto al valor central',upper]];
+ document.getElementById('methods').innerHTML=rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td><b>${money(r[2])}</b></td></tr>`).join('');
+ const res=document.getElementById('result');res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+}
+function emailLead(){
+ const q=id=>document.getElementById(id).value;
+ const body=encodeURIComponent(`Solicito valoración profesional en Cabo Verde.\nIsla: ${q('island')}\nMunicipio: ${q('municipality')}\nZona: ${q('address')}\nTipo: ${q('type')}\nÁrea: ${q('area')} m²\nNIP: ${q('nip')}\nCIP: ${q('cip')}\nMatriz: ${q('matricial')}`);
+ location.href='mailto:info@laoptima.com?subject='+encodeURIComponent('Valoración inmobiliaria Cabo Verde')+'&body='+body;
+}
+</script></body></html>
